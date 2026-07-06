@@ -5,6 +5,28 @@
   --foreground: #171717;
 }
 
+@theme {
+  --color-brutal-yellow: #FFD600;
+  --color-brutal-purple: #8B2FF5;
+  --color-brutal-pink: #FF3B5C;
+  --color-brutal-blue: #A7C7FF;
+  --color-brutal-red: #B0122E;
+
+  --shadow-brutal: 6px 6px 0px 0px rgba(0, 0, 0, 1);
+  --shadow-brutal-sm: 3px 3px 0px 0px rgba(0, 0, 0, 1);
+
+  --animate-marquee: marquee 20s linear infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  } 
+  100% {
+    transform: translateX(-33.33%);
+  }
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
