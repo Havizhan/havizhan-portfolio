@@ -1,20 +1,19 @@
+import { ArrowUpRight, RotateCw } from "lucide-react";
+import ProfileCard from "./ProfileCard";
+
 export default function Hero() {
     return (
-        <section className="relative px-8 py-16 grid md:grid-cols-2 gap-8 items-center overflow-hidden">
+        <section className="relative px-6 md:px-12 py-16 grid md:grid-cols-2 gap-12 items-center overflow-hidden max-w-7xl mx-auto">
             <div>
-                <div className="flex flex-wrap gap-3 mb-8">
-                    <span className="bg-brutal-yellow border-2 border-black shadow-brutal-sm px-3 py-1 text-xs fotn-bold">
-                        100% SCHOLARSHIP @ CODELAMP (97.5)
-                    </span>
-                    <span className="bg-brutal-purple text-white border-2 border-black shadow-brutal-sm px-3 py-1 text-xs font-bold">
-                        COSMIC SECURITY STAFF
-                    </span>
-                    <span className="bg-brutal-pink text-white border-2 border-black shadow-brutal-sm px-3 py-1 text-xs font-bold">
-                        #2 HTML NGAWI
+                {/* Badges/Tags */}
+                <div className="flex flex-wrap gap-3 mb-8 select-none">
+                    <span className="bg-brutal-pink text-white border-2 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] px-3 py-1.5 text-xs font-black tracking-wide flex items-center gap-1.5">
+                        #2 HTML NGAWI <ArrowUpRight className="w-3.5 h-3.5" />
                     </span>
                 </div>
-                
-                <h1 className="text-6xl md:text-7xl font-black leading-none mb-2">
+
+                {/* Title */}
+                <h1 className="text-6xl md:text-7xl font-black leading-none mb-3 text-black tracking-tight select-none">
                     HALO
                 </h1>
                 <h1 className="text-5xl md:text-6xl font-black bg-black text-white inline-block px-2 mb-6">
@@ -23,34 +22,26 @@ export default function Hero() {
 
                 <p className="text-lg max-w-md mb-8">
                     UI/UX Developer @{" "}
-                    <span className="bg-brutal-yellow fotn-bold italic px-1">NXCTF</span>.
-                    Member{" "}
                     <span className="bg-brutal-blue fotn-bold px-1">
-                        Unit Produksi RPL
+                        Mahasiswa Informatika
                     </span>{" "}
                     @ Universitas Sebelas Maret.
                 </p>
 
+                {/* Action Buttons */}
                 <div className="flex gap-4">
-                    <button className="bg-black text-white px-6 py-3 font-bold border-2 border-black shadow-brutal hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all">
+                    <button className="bg-black text-white px-8 py-3.5 font-black border-3 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all cursor-pointer text-base uppercase">
                         BIO_LOG
                     </button>
-                    <button className="bg-white text-black px-6 py-3 font-bold border-2 border-black shadow-brutal hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all">
+                    <button className="bg-white text-black px-8 py-3.5 font-black border-3 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all cursor-pointer text-base uppercase">
                         PROJECTS
                     </button>
                 </div>
             </div>
 
-            <div className="flex justify-center relative">
-                <div className="relative rotate-3 w-80 h-96 bg-white border-4 border-black shadow-brutal">
-                    <div className="absolute inset-4 bg-gradient-to-br fro-brutal-red to-red-900 flex flex-col items-center justify-center">
-                        <h2 className="text-white text-4xl font-black italic">Havizhan</h2>
-                        <p className="text-white text-xs tracking-widest">DEV</p>
-                        <span className="absolute bottom-4 left-4 bg-black text-white text-xs font-bold px-2 py-1">
-                            Student
-                        </span>
-                    </div>
-                </div>
+            {/* Profile Card wrapper */}
+            <div className="flex justify-center md:justify-end items-center py-8">
+                <ProfileCard />
             </div>
         </section>
     );
