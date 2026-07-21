@@ -1,6 +1,5 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import { main } from "framer-motion/client";
 
 export default function Home() {
   return (
