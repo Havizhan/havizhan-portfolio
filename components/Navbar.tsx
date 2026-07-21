@@ -1,24 +1,34 @@
+import { head, header } from "framer-motion/client";
+
 export default function Navbar() {
     return (
-        <nav className="flex items-center justify-between px-8 py-4 border-b-4 border-black bg-white text-black select-none sticky top-0 z-50">
-            <div className="flex items-center gap-3">
-                <div className="bg-brutal-red text-white font-black w-8 h-8 flex items-center justify-center border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-                    H
-                </div>
-                <span className="font-bold tracking-wide">HAVIZHAN_SYS.LOG</span>
+        <header className="fixed top-5 left-0 right-0 z-50 flex justify-center px-4">
+            <nav className="w-full max-w-5xl bg-[#1a1a1a]/90 backdrop-blur-md border border-white/10 rounded-full px-6 py-3 flex items-center justify-between shadow-2xl">
+            {/* Logo */}
+            <div className="flex items-center">
+                <span className="text-white font-extrabold text-xl tracking-wider select-none">
+                    H<span className="text-gray-400">RA</span>
+                </span>
             </div>
 
-            <div className="hidden md:flex gap-8 font-extrabold text-sm">
-                <a href="#home" className="hover:text-brutal-purple hover:underline underline-offset-4 decoration-2 transition-all">Home</a>
-                <a href="#about" className="hover:text-brutal-purple hover:underline underline-offset-4 decoration-2 transition-all">About</a>
-                <a href="#projects" className="hover:text-brutal-purple hover:underline underline-offset-4 decoration-2 transition-all">PROJECTS</a>
-                <a href="#experience" className="hover:text-brutal-purple hover:underline underline-offset-4 decoration-2 transition-all">EXPERIENCE</a>
-                <a href="#certificates" className="hover:text-brutal-purple hover:underline underline-offset-4 decoration-2 transition-all">CERTIFICATES</a>
+            {/* Center Links */}
+            <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+                <a href="#hero" className="hover:text-white transition-colors">Home</a>
+                <a href="#portofolio" className="hover:text-white transition-colors">Portofolio</a>
+                <a href="#tech" className="hover:text-white transition-colors">Tech</a>
+                <a href="#contact" className="hover:text-white transition-colors">Contact</a>
             </div>
 
-            <button className="bg-black text-white px-5 py-2 font-black text-xs md:text-sm border-2 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:bg-white hover:text-black hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all cursor-pointer">
-                ASK_AI
-            </button>
-        </nav>
-    );
+            {/* Right Pill Button */}
+            <a href="https://instagram.com/havizhanrhaiya"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-white text-black text-xs"
+            >
+
+            </a>
+            </nav>
+
+        </header>
+    )
 }
