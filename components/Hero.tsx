@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import LanyardCard from "./LanyardCard";
 import { ArrowDownCircle } from "lucide-react";
-import { useSegmentState } from "next/dist/next-devtools/userspace/app/segment-explorer-node";
 
 export default function Hero() {
     const fullText = "Pengalaman lebih dari 1 tahun mendesain visual yang modern, kreatif, dan berorientasi pada hasil nyata bagi berbagai brand, bisnis, serta content creator demi meningkatkan performa brand Anda.";
@@ -37,7 +36,7 @@ export default function Hero() {
     }, [index, isDeleting, fullText]);
 
     return (
-        <section className="w-full max-w-6xl mx-auto pt-28 pb-12 px-4">
+        <section className="w-full max-w-[95%] xl:max-w-[1400px] mx-auto pt-28 pb-12 px-2 sm:px-4">
             {/* Main Container Card {Responsive}: Stacked di HP, Kiri-kanan di PC*/}
             <div className="bg-[#161618] border border-white/10 rounded-[36px] p-6 md:p-12 lg:p-14 shadow-2xl relative overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
 
@@ -68,11 +67,11 @@ export default function Hero() {
                     </div>
 
                     {/* CTA Button */}
-                    <div className="pt-4">
+                    <div className="pt-4 w-full max-w-lg">
                         <a href="#portofolio"
-                            className="inline-flex items-center gap-3 bg-white text-black font-bold text-sm md:text-base px-7 py-3.5 rounded-full hover:bg-gray-200 transition-all shadow-lg active:scale-95 group">
+                            className="flex items-center justify-between gap-3 w-full bg-white text-black font-bold text-base md:text-lg px-8 py-4 rounded-full hover:bg-gray-200 transition-all shadow-lg active:scale-95 group">
                             <span>Portofolio</span>
-                            <ArrowDownCircle className="w-5 h-5 transition-transform group-hover:translate-y-0.5" />
+                            <ArrowDownCircle className="w-5 h-5 md:h-6 transition-transform group-hover:translate-y-0.5" />
                         </a>
                     </div>
                 </div>
