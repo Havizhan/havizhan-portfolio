@@ -15,7 +15,7 @@ body {
 /* Background Grid Texture */
 .bg-dark-grid {
   background-color: #0c0c0e;
-  background-image: linear-gradient(to right, rgba(255, 255, 2555, 0.05) 1px, transparent 1 px), linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-image: linear-gradient(to right, rgba(255, 255, 2555, 0.03) 1px, transparent 1 px), linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   background-size: 32px 32px;
 }
 

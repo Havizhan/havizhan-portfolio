@@ -23,7 +23,7 @@ export default function Hero() {
         } else if (!isDeleting && index === fullText.length) {
             timer = setTimeout(() => {
                 setIsDeleting(true);
-            }, 3500) // jeda diam selama 3.5 detik sebelum terhapus
+            }, 5000) // jeda diam selama 5 detik sebelum terhapus
         } else if (isDeleting && index > 0) {
             timer = setTimeout(() => {
                 setDisplayedText((prev) => prev.slice(0, -1));
@@ -59,7 +59,7 @@ export default function Hero() {
                     </h1>
 
                     {/* Deskripsi Teks dengan Animasi */}
-                    <div className="min-h-[4.5rem] md:min-h-[3.5rem] flex items-start">
+                    <div className="min-h-[4.5rem] md:min-h-[3.5rem] flex items-start border-1 border-white/10 pl-6 md:ml-6">
                         <p className="text-gray-400 text-sm md:text-base leading-relaxed max-w-xl">
                             {displayedText}
                             <span className="inline-block w-2 h-4 ml-1 bg-white animate-pulse"></span>
