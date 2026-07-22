@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import LanyardCard from "./LanyardCard";
 import { ArrowDownCircle } from "lucide-react";
+import { span } from "framer-motion/client";
 
 function GridBackground({ cols = 26, rows = 16 }: { cols?: number; rows?: number }) {
     const duration = 3.4;
@@ -19,25 +20,13 @@ function GridBackground({ cols = 26, rows = 16 }: { cols?: number; rows?: number
                     padding: "16px",
                 }}
             >
-                {cells.map((_, i) => {
-                    const col = i % cols;
-                    const delay = (col / cols) * duration;
-                    return (
-                        <span
-                            key={i}
-                            className="grid-cell rounded-[2px]"
-                            style={{
-                                animationDelay: `${delay}s`,
-                                animationDuration: `${duration}s`,
-                            }}
-                        />
-                    );
-                })}
+                {cells.map((_, i) => (
+                    <span key={i} className="grid-cell rounded-[2px]" />
+                ))}
             </div>
         </div>
-    )
+    );
 }
-
 
 export default function Hero() {
     const fullText = "Pengalaman lebih dari 1 tahun mendesain visual yang modern, kreatif, dan berorientasi pada hasil nyata bagi berbagai brand, bisnis, serta content creator demi meningkatkan performa brand Anda.";
@@ -45,6 +34,17 @@ export default function Hero() {
     const [displayedText, setDisplayedText] = useState("");
     const [isDeleting, setIsDeleting] = useState(false);
     const [index, setIndex] = useState(0);
+
+    const [isHovered, setIsHovered] = useState(false);
+    const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        e.currentTarget.style.setProperty("--mouse-x", `${x}px`);
+        e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
+    };
+
 
     // Effect Animasi Mengetik dan Menghapus (loop)
     useEffect(() => {
@@ -73,9 +73,26 @@ export default function Hero() {
     return (
         <section className="w-full max-w-[95%] xl:max-w-[1400px] mx-auto pt-28 pb-12 px-4">
             {/* Main Container Card {Responsive}: Stacked di HP, Kiri-kanan di PC*/}
-            <div className="bg-[#161618] border border-white/10 rounded-[36px] p-6 pb-12 md:p-12 md:pb-20 lg:p-14 lg:pb-24 shadow-2xl relative overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-10 items-center min-h-[560px] md:min-h-[620px] lg:min-h-[680px]">
+            <div
+                onPointerMove={handlePointerMove}
+                onPointerEnter={() => setIsHovered(true)}
+                onPointerLeave={() => setIsHovered(false)}
+                className="bg-[#161618] border border-white/10 rounded-[36px] p-6 pb-16 md:p-12 md:pb-20 lg:p-14 lg:pb-24 shadow-2xl relative overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-10 items-center min-h-[560px] md:min-h-[620px] lg:min-h-[680px]">
 
                 {/* Background Subtle Gradient Glow */}
+                <div
+                    className="absolute inset-0 pointer-events-none transition-opacity duration-300 z-10"
+                    style={{
+                        background: `radial-gradient(
+                            circle 250px at var(--mouse-x, 0px) var(--mouse-y, 0px),
+                            rgba(129, 175, 255, 0.15),
+                            transparent 80% 
+                        )`,
+                        opacity: isHovered ? 1 : 0,
+                    }}
+                />
+
+                {/* Background Subtle gradient Glow */}
                 <div className="absolute top-0 left-1/4 w-96 h-96 bg-white/5 rounded-full blur-3xl pointer-events-none z-0"></div>
 
                 {/* Grid background */}
