@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import Image from "next/image";
+import { span } from "framer-motion/client";
 
 export default function LanyardCard() {
     // Motion values
@@ -11,21 +12,9 @@ export default function LanyardCard() {
 
     // Menyimpan posisi relatif klik pertama (dipakai untuk sedikit bias saat menggantung)
     const [clickOffset, setClickOffset] = useState({ x: 0, y: 0 });
-
-    // [PERUBAHAN] Panjang tali dikecilkan (120 -> 90) mengikuti ukuran lanyard yang lebih kecil
-    const L = 90;
+    const L = 20;
 
     // 1. Sudut rotasi TALI
-    // Vektor dari anchor (0,0) ke titik gantung kartu = (lx, L+ly).
-    // PEMBUKTIAN ARAH (biar tidak salah lagi):
-    //   Contoh: lx = +80 (ditarik ke KANAN), ly = 0
-    //   angle = atan2(-80, 90) ≈ -41.6°  (NEGATIF)
-    //   CSS rotate(θ) memutar SEARAH JARUM JAM untuk θ positif.
-    //   Titik ujung tali (awalnya lurus ke bawah) setelah dirotasi:
-    //     ujungX = -sin(θ)
-    //   Untuk θ = -41.6°:  ujungX = -sin(-41.6°) = +0.66  -> POSITIF -> ujung tali ke KANAN.
-    //   Jadi θ negatif -> ujung tali condong ke KANAN. Ini SUDAH BENAR
-    //   dan cocok dengan arah tarikan (kanan -> tali ikut ke kanan).
     const strapAngle = useTransform([x, y], ([latestX, latestY]) => {
         const lx = latestX as number;
         const ly = latestY as number;
@@ -45,19 +34,10 @@ export default function LanyardCard() {
         const lx = latestX as number;
         const ly = latestY as number;
         const dist = Math.sqrt(lx * lx + ly * ly);
-        return Math.min(Math.max((dist - 4) / 16, 0), 1);
+        return Math.min(Math.max(dist / 12, 0), 1);
     });
 
     // 3. Rotasi KARTU
-    // [PERUBAHAN] SEBELUMNYA: cardRotation dihitung dari beberapa suku
-    // yang arahnya saling berlawanan (strapAngle*0.5 + lx*0.01 + torque),
-    // jadi hasil akhirnya kadang malah kebalik dari strapAngle -> BUG.
-    // SEKARANG: cardRotation murni turunan langsung dari strapAngle
-    // (dikalikan 0.7), jadi kartu SELALU condong searah dengan tali,
-    // persis seperti lanyard sungguhan (kartu = kelanjutan dari tali).
-    // clickOffset.y hanya memberi bias kecil & konstan (tidak tergantung
-    // arah tarik) agar kartu terasa sedikit berbeda tergantung dipegang
-    // dari atas/bawah, tanpa mengganggu arah utama.
     const cardRotation = useTransform(strapAngle, (angle) => {
         return (angle as number) * 0.7 + clickOffset.y * 3;
     });
@@ -70,7 +50,6 @@ export default function LanyardCard() {
     };
 
     return (
-        // [PERUBAHAN] Semua ukuran dikecilkan satu tingkat di tiap breakpoint
         <div className="relative w-full h-[260px] sm:h-[320px] md:h-[380px] lg:h-[420px] flex flex-col items-center select-none pt-0 overflow-visible">
             {/* Titik jangkar tali */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-6 sm:w-7 h-2 sm:h-2.5 bg-[#0d0d0f] z-30 border-b border-white/10" />
@@ -83,12 +62,13 @@ export default function LanyardCard() {
                     opacity: strapOpacity,
                     transformOrigin: "top center",
                 }}
-                className="absolute top-0 left-[calc(50%-8px)] sm:left-[calc(50%-9px)] w-4 sm:w-[18px] bg-[#111113] border-x border-white/10 flex flex-col items-center justify-between py-3 z-10 shadow-[0_8px_16px_rgba(0,0,0,0.6)]"
+                className="absolute top-0 left-[calc(50%-8px)] sm:left-[calc(50%-9px)] w-4 sm:w-[18px] bg-[#111113] border-x border-white/10 flex flex-col items-center justify-start gap-1.5 py-2 overflow-hidden z-10 shadow-[0_8px_16px_rgba(0,0,0,0.6)]"
             >
-                <span className="text-[5px] font-black text-white/30 tracking-widest select-none">HRA</span>
-                <span className="text-[5px] font-black text-white/30 tracking-widest select-none">HRA</span>
-                <span className="text-[5px] font-black text-white/30 tracking-widest select-none">HRA</span>
-                <span className="text-[5px] font-black text-white/30 tracking-widest select-none">HRA</span>
+                {Array.from({ length: 25 }).map((_, i) => (
+                    <span key={i} className="text-[5px] font-black text-white/30 tracking-widest select-none shrink-0 leading-none">
+                        HRA
+                    </span>
+                ))}
             </motion.div>
 
             {/* Kartu ID Card */}
@@ -100,17 +80,14 @@ export default function LanyardCard() {
                     transformOrigin: "top center",
                 }}
                 drag
-                // [PERUBAHAN] Batas drag diperkecil proporsional dengan L yang baru
-                dragConstraints={{ top: -18, left: -75, right: 75, bottom: 110 }}
+                dragConstraints={{ top: 0, left: -70, right: 70, bottom: 100 }}
                 dragElastic={0.4}
                 dragSnapToOrigin={true}
                 onPointerDown={handlePointerDown}
                 whileTap={{ cursor: "grabbing" }}
                 whileHover={{ scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 220, damping: 18 }}
-                // [PERUBAHAN] Hanya SATU deklarasi `left` (tidak ada lagi
-                // `left-1/2` yang tabrakan). Ukuran kartu dikecilkan.
-                className="absolute top-[55px] sm:top-[68px] md:top-[82px] lg:top-[92px]
+                className="absolute top-[15px] sm:top-[18px] md:top-[22px] lg:top-[25px]
                     left-[calc(50%-72px)] sm:left-[calc(50%-88px)] md:left-[calc(50%-104px)] lg:left-[calc(50%-120px)]
                     cursor-grab z-20 w-36 sm:w-44 md:w-52 lg:w-60
                     bg-gradient-to-b from-gray-100 via-gray-200 to-gray-300 rounded-xl sm:rounded-2xl
@@ -127,12 +104,7 @@ export default function LanyardCard() {
                 {/* Lubang kartu */}
                 <div className="w-6 sm:w-7 h-1.5 sm:h-2 bg-black/90 mx-auto rounded-full mb-2 sm:mb-3 border border-gray-400/50 shadow-inner mt-1.5"></div>
 
-                {/* [PERUBAHAN] Frame foto: ukuran fisik dikecilkan, tapi
-                    - sumber gambar tetap file aslinya (tidak dikompres)
-                    - quality={100} dipasang eksplisit
-                    - `sizes` disesuaikan dengan lebar render sebenarnya
-                    sehingga Next.js tetap mengambil resolusi yang pas
-                    tajam untuk ukuran tampil yang baru, bukan yang buram. */}
+                {/* Frame Foto */}
                 <div className="relative w-full h-40 sm:h-48 md:h-56 lg:h-64 bg-gray-900 rounded-lg sm:rounded-xl overflow-hidden border border-black/20 shadow-md">
                     <Image
                         src="/profile-photo.jpeg"
