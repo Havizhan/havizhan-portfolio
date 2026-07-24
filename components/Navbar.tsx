@@ -14,8 +14,8 @@ export default function Navbar() {
                 {/* Center Links */}
                 <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
                     <a href="#hero" className="hover:text-white transition-colors">Home</a>
-                    <a href="#portofolio" className="hover:text-white transition-colors">Portofolio</a>
-                    <a href="#tech" className="hover:text-white transition-colors">Tech</a>
+                    <a href="#portofolio" className="hover:text-white transition-colors">About Me</a>
+                    <a href="#tech" className="hover:text-white transition-colors">Projects</a>
                     <a href="#contact" className="hover:text-white transition-colors">Contact</a>
                 </div>
 

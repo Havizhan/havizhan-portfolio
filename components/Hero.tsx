@@ -125,7 +125,7 @@ export default function Hero() {
                     <div className="pt-4 w-full max-w-lg">
                         <a href="#portofolio"
                             className="flex items-center justify-between gap-3 w-full bg-white text-black font-bold text-base md:text-lg px-8 py-4 rounded-full hover:bg-gray-200 transition-all shadow-lg active:scale-95 group">
-                            <span>Portofolio</span>
+                            <span>About Me</span>
                             <ArrowDownCircle className="w-5 h-5 md:h-6 transition-transform group-hover:translate-y-0.5" />
                         </a>
                     </div>
