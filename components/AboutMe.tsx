@@ -281,6 +281,41 @@ export default function Aboutme() {
 
                 </div>
 
+                {/* Grid Informasi Kartu */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-16 w-full px-4 relative z-10">
+
+                    {/* 1. About Me */}
+                    <InfoCard icon={User} title="ABOUT ME">
+                        Saya Seorang Informatics Student yang bersemangat dalam membangun web modern, membuat desain yang menarik, dan mengeksplorasi AI untuk menciptakan solusi kreatif.
+                    </InfoCard>
+
+                    {/* 2. EDUCATION */}
+                    <InfoCard icon={GraduationCap} title="EDUCATION ">
+                        <div className="space-y-1">
+                            <p className="font-semibold text-white">Informatika</p>
+                            <p>Universitas Sebelas Maret</p>
+                            <p className="text-xs text-blue-400 bg-blue-500/10 border border-blue-500/20 px-2 py-0.5 rounded-full inline-block mt-1">2023 - Sekarang</p>
+                        </div>
+                    </InfoCard>
+
+                    {/* 3. EXPERIENCE */}
+                    <InfoCard icon={Briefcase} title="EXPERIENCE">
+                        <div className="space-y-1">
+                            <p className="font-semibold text-white">Web Developer & Designer</p>
+                            <p>Freelance Project</p>
+                            <p className="text-xs text-blue-400 bg-blue-500/10 border border-blue-500/20 px-2 py-0.5 rounded-full inline-block mt-1">2026 - Sekarang</p>
+                        </div>
+                    </InfoCard>
+
+                    {/* 4. LOCATION */}
+                    <InfoCard icon={MapPin} title="LOCATION">
+                        <div className="space-y-1">
+                            <p className="font-semibold text-white">Surakarta, Indonesia</p>
+                            <p className="text-xs text-gray-500">Zona Waktu: UTC +7</p>
+                        </div>
+                    </InfoCard>
+
+                </div>
             </div>
         </section >
     )
