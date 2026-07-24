@@ -34,6 +34,38 @@ body {
   box-shadow: 0 0 10px 2px rgba(129, 175, 255, 0.25);
 }
 
+/* Animasi Bintang Jatuh */
+@keyframes shootingStar {
+  0% {
+    transform: translate(0, 0) rotate(-45deg) scaleX(0);
+    opacity: 0;
+  }
+
+  5% {
+    opacity: 0.8;
+    transform: translate(0, 0) rotate(-45deg) scaleX(1);
+  }
+
+  25% {
+    transform: translate(-300px, 300px) rotate(-45deg) scaleX(1);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translate(-300px, 300px) rotate(-45deg) scaleX(0);
+    opacity: 0;
+  }
+}
+
+.shoting-star {
+  width: 100px;
+  height: 1.5px;
+  background: linear-gradient(-90deg, #ffffff, rgba(129, 175, 255, 0));
+  filter: drop-shadow(0 0 5px rgba(129, 175, 255, 0.6));
+  animation: shootingStar 6s linear infinite;
+  opacity: 0;
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;

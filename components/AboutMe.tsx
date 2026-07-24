@@ -4,7 +4,7 @@ import { useRef, useState, useEffect, unstable_startGestureTransition } from "re
 import { motion, useScroll, useTransform } from "framer-motion";
 import { User, GraduationCap, Briefcase, MapPin, MouseRightIcon } from "lucide-react";
 import { devIndicatorServerState } from "next/dist/server/dev/dev-indicator-server-state";
-import { div, img, svg } from "framer-motion/client";
+import { div, img, section, svg } from "framer-motion/client";
 import { Chocolate_Classical_Sans } from "next/font/google";
 
 // Effect Bintang Jatuh
@@ -175,6 +175,115 @@ export default function Aboutme() {
 
     // CSS Dinamis untuk label kategori orbit
     const frontendY = useTransform(middleRadius, (r) => -r - 24);
+    const backendX = useTransform(middleRadius, (r) => -r - 32);
+    const designY = useTransform(outerRadius, (r) => r + 24);
+    const aiX = useTransform(innerRadius, (r) => r + 24);
+
+    return (
+        <section
+            id="portofolio"
+            ref={containerRef}
+            className="relative w-full py-24 px-4 overflow-hidden bg-[#0d0d0f] border-t border-white/5 flex flex-col items-center justify-center"
+        >
+            {/* Background Bintang Jatuh */}
+            <ShootingStars />
+
+            <div className="max-w-[1400px] w-full mx-auto flex flex-col items-center relative z-10">
+                {/* Header Judul */}
+                <div className="text-center mb-16 relative z-10">
+                    <span className="text-b;ue-400 texy-xs font-semibold tracking-widest uppercase pb-1 border-b-2 border-blue-400/30">
+                        ABOUT ME
+                    </span>
+                    <h2 className="text-3xl sm:text-5xl font-extrabold mt-4 text-white tracking-tight">
+                        What I Use to Build & Create
+                    </h2>
+                    <p className="text-gray-400 text-sm sm:text-base mt-3 max-w-xl mx-auto ">
+                        Technologies and tools that I use to bring ideas lo life.
+                    </p>
+                </div>
+
+                {/* Planet & Orbit */}
+                <div className="relative w-full h-[320px] sm:h-[500px] md:h-[600px] flex items-center justify-center overflow-visible select-none">
+                    {/* Garis Lintasan Orbit */}
+                    <svg
+                        className="absolute inset-0 w-full h-full pointer-events-none z-0">
+                        {/* Orbit Dalam */}
+                        <motion.circle
+                            cx="50%"
+                            cy="50%"
+                            r={innerRadius}
+                            fill="none"
+                            stroke="rgba(255, 255, 255, 0.05"
+                            strokeWidth="1"
+                            strokeDasharray="4.4"
+                        />
+                        {/* Orbit Tengah */}
+                        <motion.circle
+                            cx="50%"
+                            cy="50%"
+                            r={middleRadius}
+                            fill="none"
+                            stroke="rgba(255, 255, 255, 0.04"
+                            strokeWidth="1"
+                        />
+                        {/* Orbit Luar */}
+                        <motion.circle
+                            cx="50%"
+                            cy="50%"
+                            r={outerRadius}
+                            fill="none"
+                            stroke="rgba(255, 255, 255, 0.02"
+                            strokeWidth="1.5"
+                        />
+                    </svg>
+
+                    {/* Kategori Orbit */}
+                    <motion.div style={{ y: frontendY, x: 0 }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-blue-400/70 font-bold text-[9px] sm:text-[11px] tracking-widest pointer-events-none uppercase">
+                        Frontend
+                    </motion.div>
+                    <motion.div style={{ x: backendX, y: 0 }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-purple-400/70 font-bold text-[9px] sm:text-[11px] tracking-widest pointer-events-none uppercase">
+                        Backend
+                    </motion.div>
+                    <motion.div style={{ y: designY, x: 0 }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-indigo-400/70 font-bold text-[9px] sm:text-[11px] tracking-widest pointer-events-none uppercase">
+                        Design
+                    </motion.div>
+                    <motion.div style={{ x: aiX, y: 0 }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-cyan-400/70 font-bold text-[9px] sm:text-[11px] tracking-widest pointer-events-none uppercase">
+                        AI
+                    </motion.div>
+
+                    {/* Pusat Matahari Orbit */}
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-28 h-28 sm:w-40 sm:h-40 rounded-full bg-gradient-to-br from-[#1b1b1f] to-[#0c0c0e] border border-white/10 shadow-[0_0_50px_rgba(129, 175, 255, 0.12)] flex flex-col items-center justify-center p-4">
+                        <h3 className="text-xl sm:text-3xl font-extrabold tracking-widest text-white leading-none">HRA</h3>
+                        <div className="h-[1.5px] w-6 bg-blue-400 my-2" />
+                        <p className="text-[7px] sm:text-[9px] text-gray-400 font-mono tracking-widest text-center uppercase">
+                            Developer & Creator
+                        </p>
+                    </div>
+
+                    {/* Planet & Orbit */}
+                    {/* Orbit 1: Backkend/AI */}
+                    {orbit1Skills.map((skill, index) => {
+                        const angle = (index * 2 * Math.PI) / orbit1Skills.length + Math.PI / 6;
+                        return <OrbitItem key={skill.name} radius={innerRadius} angle={angle} skill={skill} />;
+                    })}
+
+                    {/* Orbit 2: Frontend */}
+                    {orbit2Skills.map((skill, index) => {
+                        const angle = (index * 2 * Math.PI) / orbit2Skills.length + Math.PI / 3;
+                        return <OrbitItem key={skill.name} radius={middleRadius} angle={angle} skill={skill} />;
+                    })}
+
+                    {/* Orbit 3: Design */}
+                    {orbit3Skills.map((skill, index) => {
+                        const angle = (index * 2 * Math.PI) / orbit3Skills.length;
+                        return <OrbitItem key={skill.name} radius={outerRadius} angle={angle} skill={skill} />;
+                    })}
+
+                </div>
+
+            </div>
+        </section >
+    )
 
 
 }
