@@ -9,13 +9,12 @@ body {
   background-color: var(--background);
   color: var(--foreground);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  overflow: hidden;
 }
 
 /* Background Grid Texture */
 .bg-dark-grid {
   background-color: #0c0c0e;
-  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1 px), linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   background-size: 32px 32px;
 }
 
@@ -26,7 +25,7 @@ body {
   pointer-events: auto;
   transition:
     background-color 0.45s ease,
-    box-shadow 0.45 ease;
+    box-shadow 0.45s ease;
 }
 
 .grid-cell:hover {
@@ -34,36 +33,59 @@ body {
   box-shadow: 0 0 10px 2px rgba(129, 175, 255, 0.25);
 }
 
+.shooting-star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 9999px;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.8));
+  animation-name: shootingStarMove;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  opacity: 0;
+}
+
+.shooting-star::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 70px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0));
+  transform: translateY(-50%) rotate(-33deg);
+  transform-origin: left center;
+}
+
 /* Animasi Bintang Jatuh */
-@keyframes shootingStar {
+@keyframes shootingStarMove {
   0% {
-    transform: translate(0, 0) rotate(-45deg) scaleX(0);
+    transform: translate(0, 0);
     opacity: 0;
   }
 
   5% {
-    opacity: 0.8;
-    transform: translate(0, 0) rotate(-45deg) scaleX(1);
+    opacity: 1;
   }
 
-  25% {
-    transform: translate(-300px, 300px) rotate(-45deg) scaleX(1);
+  30% {
+    transform: translate(-260px, 170px);
     opacity: 0;
   }
 
   100% {
-    transform: translate(-300px, 300px) rotate(-45deg) scaleX(0);
+    transform: translate(-260px, 170px);
     opacity: 0;
   }
 }
 
-.shoting-star {
-  width: 100px;
-  height: 1.5px;
-  background: linear-gradient(-90deg, #ffffff, rgba(129, 175, 255, 0));
-  filter: drop-shadow(0 0 5px rgba(129, 175, 255, 0.6));
-  animation: shootingStar 6s linear infinite;
-  opacity: 0;
+.cosmic-bg {
+  background-color: #05050a;
+  background-image:
+    radial-gradient(ellipse 65% 55% at 50% 32%, rgba(99, 102, 241, 0.30), transparent 70%),
+    radial-gradient(ellipse 90% 70% at 50% 55%, rgba(59, 74, 176, 0.22), transparent 75%),
+    radial-gradient(circle at 50% 50%, rgba(140, 160, 255, 0.08), transparent 60%);
 }
 
 /* Custom Scrollbar */

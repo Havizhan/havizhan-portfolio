@@ -1,11 +1,8 @@
 "use client";
 
-import { useRef, useState, useEffect, unstable_startGestureTransition } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { User, GraduationCap, Briefcase, MapPin, MouseRightIcon } from "lucide-react";
-import { devIndicatorServerState } from "next/dist/server/dev/dev-indicator-server-state";
-import { div, img, section, svg } from "framer-motion/client";
-import { Chocolate_Classical_Sans } from "next/font/google";
+import { useRef, useState, useEffect } from "react";
+import { motion, MotionValue, useScroll, useTransform } from "framer-motion";
+import { User, GraduationCap, Briefcase, MapPin } from "lucide-react";
 
 // Effect Bintang Jatuh
 function ShootingStars() {
@@ -16,16 +13,16 @@ function ShootingStars() {
 
     if (!mounted) return null;
 
-    // 12 Bintang Jatuh
-    const stars = Array.from({ length: 12 }).map((_, i) => ({
-        top: Math.random() * 50,
-        left: 20 + Math.random() * 70,
+    // 14 Bintang Jatuh
+    const stars = Array.from({ length: 14 }).map((_, i) => ({
+        top: Math.random() * 55,
+        left: 20 + Math.random() * 90,
         delay: Math.random() * 8,
-        duration: 2 + Math.random() * 3,
+        duration: 2.5 + Math.random() * 3,
     }));
 
     return (
-        <div className="absolute inset-0 overflow-hidden pointer-events-none z-10" >
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0" >
             {
                 stars.map((star, i) => (
                     <div
@@ -75,10 +72,11 @@ interface Skill {
     isCustom?: boolean;
 }
 
-function OrbitItem({ radius, angle, skill }: { radius: any; angle: number; skill: Skill }) {
+function OrbitItem({ radius, angle, skill }: { radius: MotionValue<number>; angle: number; skill: Skill }) {
     // Menghitung koordinat X & Y
-    const x = useTransform(radius, (r: number) => r * Math.cos(angle));
-    const y = useTransform(radius, (r: number) => r * Math.sin(angle));
+    const round = (n: number) => Math.round(n * 10000) / 10000;
+    const x = useTransform(radius, (r) => round(r * Math.cos(angle)));
+    const y = useTransform(radius, (r) => round(r * Math.sin(angle)));
 
     return (
         <motion.div
@@ -86,16 +84,19 @@ function OrbitItem({ radius, angle, skill }: { radius: any; angle: number; skill
             whileHover={{ scale: 1.15 }}
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
         >
-            <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-[#111113]/95 border border-white/10 flex flex-center justify-center shadow-md ralative group cursor-pointer transition-all duration-300" >
+            <div className="w-9 h-9 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full bg-[#111113]/95 border border-white/10 flex items-center justify-center shadow-md relative group cursor-pointer transition-all duration-300" >
                 {/* Effect Glow ketika di hover */}
-                <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-md pointer-events-none" />
+                <div
+                    className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-md pointer-events-none"
+                    style={{ backgroundColor: skill.glow }}
+                />
                 {skill.isCustom ? (
                     <AlightMotionIcon />
                 ) : (
                     <img
                         src={skill.icon}
                         alt={skill.name}
-                        className="w-5 h-5 sm:w-7 sm:h-7 object-contain relative z-10 transition-transform duration-300"
+                        className="w-4 h-4 sm:w-6 sm:h-6 md:w-7 md:h-7 object-contain relative z-10 transition-transform duration-300"
                         style={{ filter: skill.filter }}
                     />
                 )}
@@ -114,12 +115,12 @@ function InfoCard({ icon: Icon, title, children }: { icon: any; title: string; c
     return (
         <motion.div
             whileHover={{ y: -6, transition: { duration: 0.2 } }}
-            className="bg-[#161618]/60 border border-white/5 backdrop-blur-md rounded-2xl p-6 shadow-[0_10px_30px_rgba(0,0,0,0.3)] raltive overflow-hidden group hover:border-white/10 transition-colors"
+            className="bg-[#161618]/60 border border-white/5 backdrop-blur-md rounded-2xl p-6 shadow-[0_10px_30px_rgba(0,0,0,0.3)] relative overflow-hidden group hover:border-white/10 transition-colors"
         >
             <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none " />
 
             <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-cl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400">
+                <div className="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400">
                     <Icon className="w-5 h-5" />
                 </div>
                 <h4 className="text-sm font-bold text-gray-200 tracking-wider uppercase">
@@ -142,10 +143,26 @@ export default function Aboutme() {
         offset: ["start end", "end start"]
     });
 
-    // Mengubah radius orbit
-    const innerRadius = useTransform(scrollYProgress, [0.1, 0.55], [35, 110]);
-    const middleRadius = useTransform(scrollYProgress, [0.1, 0.55], [50, 170]);
-    const outerRadius = useTransform(scrollYProgress, [0.1, 0.55], [65, 230]);
+    // Skala Orbit di HP
+    const [orbitScale, setOrbitScale] = useState(1);
+    useEffect(() => {
+        function updateScale() {
+            const w = window.innerWidth;
+            if (w < 400) setOrbitScale(0.42);
+            else if (w < 640) setOrbitScale(0.55);
+            else if (w < 768) setOrbitScale(0.75);
+            else if (w < 1024) setOrbitScale(0.9);
+            else setOrbitScale(1);
+        }
+        updateScale();
+        window.addEventListener("resize", updateScale);
+        return () => window.removeEventListener("resize", updateScale);
+    }, []);
+
+    // Radius Orbit: mendekat di awal, melebar ketika di scroll
+    const innerRadius = useTransform(scrollYProgress, [0.1, 0.55], [35 * orbitScale, 110 * orbitScale]);
+    const middleRadius = useTransform(scrollYProgress, [0.1, 0.55], [50 * orbitScale, 170 * orbitScale]);
+    const outerRadius = useTransform(scrollYProgress, [0.1, 0.55], [65 * orbitScale, 230 * orbitScale]);
 
     // Data planet di Orbit
     // Dalam - Backend & AI
@@ -174,14 +191,15 @@ export default function Aboutme() {
     ];
 
     // CSS Dinamis untuk label kategori orbit
-    const frontendY = useTransform(middleRadius, (r) => -r - 24);
-    const backendX = useTransform(middleRadius, (r) => -r - 32);
-    const designY = useTransform(outerRadius, (r) => r + 24);
-    const aiX = useTransform(innerRadius, (r) => r + 24);
+    const round = (n: number) => Math.round(n * 1000) / 1000;
+    const frontendY = useTransform(middleRadius, (r) => round(-r - 24));
+    const backendX = useTransform(middleRadius, (r) => round(-r - 32));
+    const designY = useTransform(outerRadius, (r) => round(r + 24));
+    const aiX = useTransform(innerRadius, (r) => round(r + 24));
 
     return (
         <section
-            id="portofolio"
+            id="aboutMe"
             ref={containerRef}
             className="relative w-full py-24 px-4 overflow-hidden bg-[#0d0d0f] border-t border-white/5 flex flex-col items-center justify-center"
         >
@@ -191,7 +209,7 @@ export default function Aboutme() {
             <div className="max-w-[1400px] w-full mx-auto flex flex-col items-center relative z-10">
                 {/* Header Judul */}
                 <div className="text-center mb-16 relative z-10">
-                    <span className="text-b;ue-400 texy-xs font-semibold tracking-widest uppercase pb-1 border-b-2 border-blue-400/30">
+                    <span className="text-blue-400 text-xs font-semibold tracking-widest uppercase pb-1 border-b-2 border-blue-400/30">
                         ABOUT ME
                     </span>
                     <h2 className="text-3xl sm:text-5xl font-extrabold mt-4 text-white tracking-tight">
@@ -203,10 +221,9 @@ export default function Aboutme() {
                 </div>
 
                 {/* Planet & Orbit */}
-                <div className="relative w-full h-[320px] sm:h-[500px] md:h-[600px] flex items-center justify-center overflow-visible select-none">
+                <div className="relative w-full h-[280px] xs:h-[320px] sm:h-[440px] md:h-[560px] lg:h-[600px] flex items-center justify-center overflow-visible select-none">
                     {/* Garis Lintasan Orbit */}
-                    <svg
-                        className="absolute inset-0 w-full h-full pointer-events-none z-0">
+                    <svg className="absolute inset-0 w-full h-full pointer-events-none z-0">
                         {/* Orbit Dalam */}
                         <motion.circle
                             cx="50%"
@@ -215,7 +232,7 @@ export default function Aboutme() {
                             fill="none"
                             stroke="rgba(255, 255, 255, 0.05"
                             strokeWidth="1"
-                            strokeDasharray="4.4"
+                            strokeDasharray="4 4"
                         />
                         {/* Orbit Tengah */}
                         <motion.circle
@@ -238,24 +255,24 @@ export default function Aboutme() {
                     </svg>
 
                     {/* Kategori Orbit */}
-                    <motion.div style={{ y: frontendY, x: 0 }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-blue-400/70 font-bold text-[9px] sm:text-[11px] tracking-widest pointer-events-none uppercase">
+                    <motion.div style={{ y: frontendY, x: 0 }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-blue-400/70 font-bold text-[8px] sm:text-[11px] tracking-widest pointer-events-none uppercase whitespace-nowrap">
                         Frontend
                     </motion.div>
-                    <motion.div style={{ x: backendX, y: 0 }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-purple-400/70 font-bold text-[9px] sm:text-[11px] tracking-widest pointer-events-none uppercase">
+                    <motion.div style={{ x: backendX, y: 0 }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-purple-400/70 font-bold text-[8px] sm:text-[11px] tracking-widest pointer-events-none uppercase whitespace-nowrap">
                         Backend
                     </motion.div>
-                    <motion.div style={{ y: designY, x: 0 }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-indigo-400/70 font-bold text-[9px] sm:text-[11px] tracking-widest pointer-events-none uppercase">
+                    <motion.div style={{ y: designY, x: 0 }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-indigo-400/70 font-bold text-[8px] sm:text-[11px] tracking-widest pointer-events-none uppercase whitespace-nowrap">
                         Design
                     </motion.div>
-                    <motion.div style={{ x: aiX, y: 0 }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-cyan-400/70 font-bold text-[9px] sm:text-[11px] tracking-widest pointer-events-none uppercase">
+                    <motion.div style={{ x: aiX, y: 0 }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-cyan-400/70 font-bold text-[8px] sm:text-[11px] tracking-widest pointer-events-none uppercase whitespace-nowrap">
                         AI
                     </motion.div>
 
                     {/* Pusat Matahari Orbit */}
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-28 h-28 sm:w-40 sm:h-40 rounded-full bg-gradient-to-br from-[#1b1b1f] to-[#0c0c0e] border border-white/10 shadow-[0_0_50px_rgba(129, 175, 255, 0.12)] flex flex-col items-center justify-center p-4">
-                        <h3 className="text-xl sm:text-3xl font-extrabold tracking-widest text-white leading-none">HRA</h3>
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-br from-[#1b1b1f] to-[#0c0c0e] border border-white/10 shadow-[0_0_50px_rgba(129,175,255,0.12)] flex flex-col items-center justify-center p-4">
+                        <h3 className="text-lg sm:text-2xl font-extrabold tracking-widest text-white leading-none">HRA</h3>
                         <div className="h-[1.5px] w-6 bg-blue-400 my-2" />
-                        <p className="text-[7px] sm:text-[9px] text-gray-400 font-mono tracking-widest text-center uppercase">
+                        <p className="text-[6px] sm:text-[8px] md:text-[9px] text-gray-400 font-mono tracking-widest text-center uppercase">
                             Developer & Creator
                         </p>
                     </div>
@@ -278,7 +295,6 @@ export default function Aboutme() {
                         const angle = (index * 2 * Math.PI) / orbit3Skills.length;
                         return <OrbitItem key={skill.name} radius={outerRadius} angle={angle} skill={skill} />;
                     })}
-
                 </div>
 
                 {/* Grid Informasi Kartu */}
@@ -314,11 +330,8 @@ export default function Aboutme() {
                             <p className="text-xs text-gray-500">Zona Waktu: UTC +7</p>
                         </div>
                     </InfoCard>
-
                 </div>
             </div>
         </section >
-    )
-
-
+    );
 }
