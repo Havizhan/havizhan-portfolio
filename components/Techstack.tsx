@@ -1,0 +1,111 @@
+"use client";
+
+import { div } from "framer-motion/client";
+import { AlightMotionIcon } from "./AboutMe";
+import { Brain } from "lucide-react";
+
+interface TechItem {
+    name: string;
+    icon?: string;
+    filter?: string;
+    isCustom?: string;
+    isBrain?: boolean;
+}
+
+interface Category {
+    label: string;
+    color: string;
+    items: TechItem[];
+}
+
+const categories: Category[] = [
+    {
+        label: "FRONTEND",
+        color: "text-sky-400",
+        items: [
+            { name: "HTML", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
+            { name: "CSS3", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
+            { name: "JavaScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
+            { name: "React", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+        ],
+    },
+    {
+        label: "BACKEND & AI",
+        color: "text-purple-400",
+        items: [
+            { name: "Node.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
+            { name: "Flask", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg" },
+            { name: "Python", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
+            { name: "Next.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" },
+        ],
+    },
+    {
+        label: "DESIGN",
+        color: "text-indigo-400",
+        items: [
+            { name: "Figma", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" },
+            { name: "Premiere Pro", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/premierepro/premierepro-original.svg" },
+            { name: "Capcut", icon: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/capcut.svg" },
+            { name: "Canva", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/canva/canva-original.svg" },
+            { name: "Alight Motion", isCustom: true },
+        ],
+    },
+];
+
+function TechIcon({ item }: { item: TechItem }) {
+    return (
+        <div className="flex flex-col items-center gap-2 group">
+            <div className="w-12 h-12 sm:w-14 s:h-14 md:w-16 md:h-16 rounded-full bg=[#111113]/90 border border-white/10 flex items-center justify-center shadow-md tracking transition-all duration-300 group-hover:scale-110 group-hover: border-white/25 ">
+                {item.isCustom ? (
+                    <AlightMotionIcon />
+                ) : item.isBrain ? (
+                    <Brain className="w-5 h-5 sm:w-6 sm:h-6 text-cyan-300" strokeWidth={1.5} />
+                ) : (
+                    <img
+                        src={item.icon}
+                        alt={item.name}
+                        className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 object-contain"
+                        style={{ filter: item.filter }}
+                    />
+                )}
+            </div>
+            <span className="text-[11px] sm:text-sx md:text-sm text-gray-300 font-medium whitespace-nowrap">
+                {item.name}
+            </span>
+        </div>
+    );
+}
+
+
+export default function TechStack() {
+    return (
+        <section
+            id="tech"
+            className="relative w-full cosmic-bg border-t border-white/5 py-20 sm:py-28 px-4 scroll-mt-24"
+        >
+            <div className="max-w-[1100px] w-full mx-auto flex flex-col items-center relative z-10">
+                <div className="text-center mb-14 sm:mb-20">
+                    <span className="text-blue-400 text-xs font-semibold tracking-widest uppercase pb-1 border-b-2 border-blue-400/30">
+                        TECH STACK
+                    </span>
+                </div>
+
+                <div className="w-full flex flex-co gap-12 sm:gap-16">
+                    {categories.map((cat) => (
+                        <div key={cat.label} className="flex flex-col items-center gap-5 sm:gap-6 w-full">
+                            <h3 className={`text-xs sm:text-sm font-bold tracking-widest uppercase ${cat.color}`}>
+                                {cat.label}
+                            </h3>
+                            <div className="flex flex-wrap gap-6 sm:gap-8 md:gap-10">
+                                {cat.items.map((item) => (
+                                    <TechIcon key={item.name} item={item} />
+                                ))}
+                            </div>
+
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
+}
