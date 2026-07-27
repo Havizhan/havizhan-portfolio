@@ -1,14 +1,34 @@
 "use client";
 
-import { div } from "framer-motion/client";
-import { AlightMotionIcon } from "./AboutMe";
 import { Brain } from "lucide-react";
+
+
+// Komponen Alight Motion
+function AlightMotionIcon() {
+    return (
+        <svg viewBox="0 0 24 24" className="w-5 h-5 sm:w-7 sm:h-7 relative z-10" fill="none" xmlns="http:www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="11" fill="url(#amGrad)" />
+            <path
+                d="M6 12C6 8.686 8.686 6 12 6C15.314 6 18 8.686 18 12C18 15.314 14 18 10 18C7.5 18 6 15 6 12Z"
+                stroke="white"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+            />
+            <defs>
+                <linearGradient id="amGrad" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#00f2fe" />
+                    <stop offset="1" stopColor="#4facfe" />
+                </linearGradient>
+            </defs>
+        </svg >
+    );
+}
 
 interface TechItem {
     name: string;
     icon?: string;
     filter?: string;
-    isCustom?: string;
+    isCustom?: boolean;
     isBrain?: boolean;
 }
 
@@ -55,7 +75,7 @@ const categories: Category[] = [
 function TechIcon({ item }: { item: TechItem }) {
     return (
         <div className="flex flex-col items-center gap-2 group">
-            <div className="w-12 h-12 sm:w-14 s:h-14 md:w-16 md:h-16 rounded-full bg=[#111113]/90 border border-white/10 flex items-center justify-center shadow-md tracking transition-all duration-300 group-hover:scale-110 group-hover: border-white/25 ">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-[#111113]/90 border border-white/10 flex items-center justify-center shadow-md transition-all duration-300 group-hover:scale-110 group-hover:border-white/25 ">
                 {item.isCustom ? (
                     <AlightMotionIcon />
                 ) : item.isBrain ? (
@@ -69,7 +89,7 @@ function TechIcon({ item }: { item: TechItem }) {
                     />
                 )}
             </div>
-            <span className="text-[11px] sm:text-sx md:text-sm text-gray-300 font-medium whitespace-nowrap">
+            <span className="text-[11px] sm:text-xs md:text-sm text-gray-300 font-medium whitespace-nowrap">
                 {item.name}
             </span>
         </div>
@@ -88,20 +108,22 @@ export default function TechStack() {
                     <span className="text-blue-400 text-xs font-semibold tracking-widest uppercase pb-1 border-b-2 border-blue-400/30">
                         TECH STACK
                     </span>
+                    <h2 className="text-2xl sm:text-4xl font-extrabold-mt-4 text-white tracking-tight flex items-center gap-2 justify-center">
+                        <span className="text-indigo-400 text-lg"> TECH STACK <span className="text-indigo-400 text-lg"> </span> </span>
+                    </h2>
                 </div>
 
-                <div className="w-full flex flex-co gap-12 sm:gap-16">
+                <div className="w-full flex flex-col gap-12 sm:gap-16">
                     {categories.map((cat) => (
                         <div key={cat.label} className="flex flex-col items-center gap-5 sm:gap-6 w-full">
                             <h3 className={`text-xs sm:text-sm font-bold tracking-widest uppercase ${cat.color}`}>
                                 {cat.label}
                             </h3>
-                            <div className="flex flex-wrap gap-6 sm:gap-8 md:gap-10">
+                            <div className="flex flex-wrap justify-center gap-6 sm:gap-8 md:gap-10">
                                 {cat.items.map((item) => (
                                     <TechIcon key={item.name} item={item} />
                                 ))}
                             </div>
-
                         </div>
                     ))}
                 </div>
