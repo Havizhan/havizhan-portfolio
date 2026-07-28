@@ -1,9 +1,8 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
-import { delay, motion, MotionValue, useScroll, useTransform } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { User, GraduationCap, Briefcase, MapPin } from "lucide-react";
-import { div } from "framer-motion/client";
 
 // Effect Bintang Jatuh
 function ShootingStars() {
@@ -51,7 +50,7 @@ function BackgroundStars() {
 
     if (!mounted) return null;
 
-    const stars = Array.from({ length: 80 }).map((_, i) => ({
+    const stars = Array.from({ length: 80 }).map(() => ({
         top: Math.random() * 100,
         left: Math.random() * 100,
         size: Math.random() * 2 + 0.8,
@@ -67,19 +66,19 @@ function BackgroundStars() {
                     key={i}
                     className="absolute bg-white rounded-full animate-pulse"
                     style={{
-                        top: `{$star.top}%`,
-                        left: `{$star.left}%`,
-                        width: `{$star.size}px`,
-                        height: `{$star.top}px`,
+                        top: `${star.top}%`,
+                        left: `${star.left}%`,
+                        width: `${star.size}px`,
+                        height: `${star.size}px`,
                         opacity: star.opacity,
-                        animationDelay: `{$star.delay}s`,
-                        animationDuration: `{$star.duration}s`,
+                        animationDelay: `${star.delay}s`,
+                        animationDuration: `${star.duration}s`,
                     }}
                 />
             ))}
         </div>
     );
-};
+}
 
 // Wrapper Kartu informasi 
 function InfoCard({ icon: Icon, title, children }: { icon: any; title: string; children: React.ReactNode }) {
@@ -110,7 +109,7 @@ export default function Aboutme() {
     return (
         <section
             id="aboutMe"
-            className="relative w-full cosmic-bg border-t border-white/5 py-20 sm:py-28 overflow-hidden"
+            className="relative w-full bg-dark-grid border-t border-white/5 py-20 sm:py-28 overflow-hidden"
         >
             {/* Background */}
             <BackgroundStars />
@@ -134,7 +133,7 @@ export default function Aboutme() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-16 w-full">
                     {/* 1. About Me */}
                     <InfoCard icon={User} title="ABOUT ME">
-                        Saya Seorang Informatics Student yang bersemangat dalam membangun web modern, membuat desain yang menarik, dan mengeksplorasi AI untuk menciptakan solusi kreatif.
+                        Saya Seorang Informatics Student yang tertarik dalam membangun web modern, membuat desain yang menarik, dan mengeksplorasi AI untuk menciptakan solusi kreatif.
                     </InfoCard>
 
                     {/* 2. EDUCATION */}

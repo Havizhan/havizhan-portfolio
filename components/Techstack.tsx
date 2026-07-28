@@ -1,35 +1,13 @@
 "use client";
 
-import { Brain } from "lucide-react";
-
-
-// Komponen Alight Motion
-function AlightMotionIcon() {
-    return (
-        <svg viewBox="0 0 24 24" className="w-5 h-5 sm:w-7 sm:h-7 relative z-10" fill="none" xmlns="http:www.w3.org/2000/svg">
-            <circle cx="12" cy="12" r="11" fill="url(#amGrad)" />
-            <path
-                d="M6 12C6 8.686 8.686 6 12 6C15.314 6 18 8.686 18 12C18 15.314 14 18 10 18C7.5 18 6 15 6 12Z"
-                stroke="white"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-            />
-            <defs>
-                <linearGradient id="amGrad" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
-                    <stop stopColor="#00f2fe" />
-                    <stop offset="1" stopColor="#4facfe" />
-                </linearGradient>
-            </defs>
-        </svg >
-    );
-}
+import { Brain, Clapperboard } from "lucide-react";
 
 interface TechItem {
     name: string;
     icon?: string;
     filter?: string;
-    isCustom?: boolean;
     isBrain?: boolean;
+    isFallbackIcon?: boolean;
 }
 
 interface Category {
@@ -37,6 +15,9 @@ interface Category {
     color: string;
     items: TechItem[];
 }
+
+const ALIGHT_MOTION_ICON = "/icons/alight-motion.png";
+const CAPCUT_ICON = "/icons/capcut.png";
 
 const categories: Category[] = [
     {
@@ -65,9 +46,9 @@ const categories: Category[] = [
         items: [
             { name: "Figma", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" },
             { name: "Premiere Pro", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/premierepro/premierepro-original.svg" },
-            { name: "Capcut", icon: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/capcut.svg" },
+            { name: "Capcut", icon: CAPCUT_ICON, isFallbackIcon: true },
             { name: "Canva", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/canva/canva-original.svg" },
-            { name: "Alight Motion", isCustom: true },
+            { name: "Alight Motion", icon: ALIGHT_MOTION_ICON },
         ],
     },
 ];
@@ -76,10 +57,10 @@ function TechIcon({ item }: { item: TechItem }) {
     return (
         <div className="flex flex-col items-center gap-2 group">
             <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-[#111113]/90 border border-white/10 flex items-center justify-center shadow-md transition-all duration-300 group-hover:scale-110 group-hover:border-white/25 ">
-                {item.isCustom ? (
-                    <AlightMotionIcon />
-                ) : item.isBrain ? (
+                {item.isBrain ? (
                     <Brain className="w-5 h-5 sm:w-6 sm:h-6 text-cyan-300" strokeWidth={1.5} />
+                ) : item.isFallbackIcon ? (
+                    <Clapperboard className="w-5 h-5 sm:w-6 sm:h-6 text-cyan-300" />
                 ) : (
                     <img
                         src={item.icon}
@@ -100,16 +81,16 @@ function TechIcon({ item }: { item: TechItem }) {
 export default function TechStack() {
     return (
         <section
-            id="tech"
-            className="relative w-full cosmic-bg border-t border-white/5 py-20 sm:py-28 px-4 scroll-mt-24"
+            id="techstack"
+            className="relative w-full py-20 sm:py-28 px-4 scroll-mt-24 overflow-hidden"
         >
             <div className="max-w-[1100px] w-full mx-auto flex flex-col items-center relative z-10">
                 <div className="text-center mb-14 sm:mb-20">
                     <span className="text-blue-400 text-xs font-semibold tracking-widest uppercase pb-1 border-b-2 border-blue-400/30">
                         TECH STACK
                     </span>
-                    <h2 className="text-2xl sm:text-4xl font-extrabold-mt-4 text-white tracking-tight flex items-center gap-2 justify-center">
-                        <span className="text-indigo-400 text-lg"> TECH STACK <span className="text-indigo-400 text-lg"> </span> </span>
+                    <h2 className="text-2xl sm:text-4xl font-extrabold-mt-4 text-white tracking-tight">
+                        What I Use to Build & Create
                     </h2>
                 </div>
 
@@ -128,6 +109,18 @@ export default function TechStack() {
                     ))}
                 </div>
             </div>
-        </section>
+
+
+            <p className="text-[10px] text-gray-600 text-center mt-10 relative z-10">
+                Alight Motion icon from{" "}
+                href="https/::www.freeiconspng.com/img/49835"
+                target:"_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-gray-400"
+                <a>
+                    freeiconspng.com
+                </a>
+            </p>
+        </section >
     );
 }

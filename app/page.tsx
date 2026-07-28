@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import AboutMe from "@/components/AboutMe";
-import Techstack from "@/components/Techstack";
+import TechStack from "@/components/TechStack";
 
 export default function Home() {
   return (
@@ -9,7 +9,7 @@ export default function Home() {
       <Navbar />
       <Hero />
       <AboutMe />
-      <Techstack />
+      <TechStack />
     </main>
   );
 }

@@ -1,4 +1,30 @@
-import { head, header } from "framer-motion/client";
+interface NavLinkProps {
+    href: string;
+    children: React.ReactNode;
+}
+
+function NavLink({ href, children }: NavLinkProps) {
+    return (
+        <a
+            href={href}
+            className="group relative inline-block h-6 overflow-hidden"
+        >
+            {/* Wrapper Teks */}
+            <span className="block transition-transform duration-300 group-hover:-translate-y-6">
+                <span className="block h-6 leading-6 text-gray-300">
+                    {children}
+                </span>
+
+                <span className="block h-6 leading-6 text-white">
+                    {children}
+                </span>
+            </span>
+
+            {/* Underline */}
+            <span className="absolute bottom-0 left-0 h-[2px] w-full bg-white scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100" />
+        </a>
+    );
+}
 
 export default function Navbar() {
     return (
@@ -12,12 +38,12 @@ export default function Navbar() {
                 </div>
 
                 {/* Center Links */}
-                <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
-                    <a href="#hero" className="hover:text-white transition-colors">Home</a>
-                    <a href="#aboutMe" className="hover:text-white transition-colors">About Me</a>
-                    <a href="#techstack" className="hover:text-white transition-colors">Tech</a>
-                    <a href="#project" className="hover:text-white transition-colors">Projects</a>
-                    <a href="#contact" className="hover:text-white transition-colors">Contact</a>
+                <div className="hidden md:flex items-center gap-8 text-sm font-medium">
+                    <NavLink href="#hero">Home</NavLink>
+                    <NavLink href="#aboutMe">About Me</NavLink>
+                    <NavLink href="#techstack">Tech</NavLink>
+                    <NavLink href="#project">Project</NavLink>
+                    <NavLink href="#contact">Contact</NavLink>
                 </div>
 
                 {/* Right Pill Button */}
