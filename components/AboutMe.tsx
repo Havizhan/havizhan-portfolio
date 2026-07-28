@@ -109,7 +109,7 @@ export default function Aboutme() {
     return (
         <section
             id="aboutMe"
-            className="relative w-full bg-dark-grid border-t border-white/5 py-20 sm:py-28 overflow-hidden"
+            className="relative w-full bg-dark-grid py-20 sm:py-28 overflow-hidden"
         >
             {/* Background */}
             <BackgroundStars />

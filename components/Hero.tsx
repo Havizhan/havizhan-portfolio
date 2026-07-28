@@ -1,12 +1,10 @@
 "use client";
 
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import LanyardCard from "./LanyardCard";
 import { ArrowDownCircle } from "lucide-react";
-import { span } from "framer-motion/client";
 
 function GridBackground({ cols = 26, rows = 16 }: { cols?: number; rows?: number }) {
-    const duration = 3.4;
     const cells = Array.from({ length: cols * rows });
 
     return (
@@ -71,7 +69,7 @@ export default function Hero() {
     }, [index, isDeleting, fullText]);
 
     return (
-        <section className="w-full max-w-[95%] xl:max-w-[1400px] mx-auto pt-28 pb-12 px-4">
+        <section id="hero" className="w-full max-w-[95%] xl:max-w-[1400px] mx-auto pt-28 pb-12 px-4 scroll-mt-28">
             {/* Main Container Card {Responsive}: Stacked di HP, Kiri-kanan di PC*/}
             <div
                 onPointerMove={handlePointerMove}
@@ -123,7 +121,7 @@ export default function Hero() {
 
                     {/* CTA Button */}
                     <div className="pt-4 w-full max-w-lg">
-                        <a href="#portofolio"
+                        <a href="#aboutMe"
                             className="flex items-center justify-between gap-3 w-full bg-white text-black font-bold text-base md:text-lg px-8 py-4 rounded-full hover:bg-gray-200 transition-all shadow-lg active:scale-95 group">
                             <span>About Me</span>
                             <ArrowDownCircle className="w-5 h-5 md:h-6 transition-transform group-hover:translate-y-0.5" />
