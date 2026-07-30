@@ -122,10 +122,10 @@ export default function Aboutme() {
                         ABOUT ME
                     </span>
                     <h2 className="text-3xl sm:text-5xl font-extrabold mt-4 text-white tracking-tight">
-                        What I Use to Build & Create
+                        A Little Bit About Me
                     </h2>
                     <p className="text-gray-400 text-sm sm:text-base mt-3 max-w-xl mx-auto ">
-                        Technologies and tools that I use to bring ideas lo life.
+                        A brief introduction of my Background, education, and experience.
                     </p>
                 </div>
 

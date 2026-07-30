@@ -89,7 +89,7 @@ export default function TechStack() {
                     <span className="text-blue-400 text-xs font-semibold tracking-widest uppercase pb-1 border-b-2 border-blue-400/30">
                         TECH STACK
                     </span>
-                    <h2 className="text-2xl sm:text-4xl font-extrabold-mt-4 text-white tracking-tight">
+                    <h2 className="text-2xl sm:text-4xl font-extrabold mt-4 text-white tracking-tight">
                         What I Use to Build & Create
                     </h2>
                 </div>
@@ -113,11 +113,12 @@ export default function TechStack() {
 
             <p className="text-[10px] text-gray-600 text-center mt-10 relative z-10">
                 Alight Motion icon from{" "}
-                href="https/::www.freeiconspng.com/img/49835"
-                target:"_blank"
-                rel="noopener noreferrer"
-                className="underline hover:text-gray-400"
-                <a>
+                <a
+                    href="https/::www.freeiconspng.com/img/49835"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline hover:text-gray-400"
+                >
                     freeiconspng.com
                 </a>
             </p>

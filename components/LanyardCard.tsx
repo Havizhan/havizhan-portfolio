@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import Image from "next/image";
-import { span } from "framer-motion/client";
 
 export default function LanyardCard() {
     // Motion values
