@@ -3,6 +3,17 @@
 import { useState, useEffect } from "react";
 import LanyardCard from "./LanyardCard";
 import { ArrowDownCircle } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { p } from "framer-motion/client";
+
+// Interface untuk data pop up
+interface Popup {
+    id: number;
+    x: number;
+    y: number;
+    rotation: number;
+    scale: number;
+}
 
 function GridBackground({ cols = 26, rows = 16 }: { cols?: number; rows?: number }) {
     const cells = Array.from({ length: cols * rows });
@@ -27,13 +38,21 @@ function GridBackground({ cols = 26, rows = 16 }: { cols?: number; rows?: number
 }
 
 export default function Hero() {
-    const fullText = "Pengalaman lebih dari 1 tahun mendesain visual yang modern, kreatif, dan berorientasi pada hasil nyata bagi berbagai brand, bisnis, serta content creator demi meningkatkan performa brand Anda.";
+    const fullText = "A sixth-semester Informatics student at Sebelas Maret University with experience in front-end web development and web design. Proficient in HTML, CSS, and JavaScript, and currently learning React. Passionate about building real-world applications, contributing to research projects, and always ready to learn new technologies and skills.";
 
     const [displayedText, setDisplayedText] = useState("");
     const [isDeleting, setIsDeleting] = useState(false);
     const [index, setIndex] = useState(0);
 
     const [isHovered, setIsHovered] = useState(false);
+
+    const [stage, setStage] = useState<'idle' | 'error' | 'confirmed' | 'active'>('idle');
+    const [popups, setPopups] = useState<Popup[]>([]);
+
+    // Animasi Ganti Teks: UNS, Desainer, Frontend
+    const roles = ["Student at UNS", "Desainer Grafis", "Frontend Dev"];
+    const [roleIndex, setRoleIndex] = useState(0);
+
     const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
         const rect = e.currentTarget.getBoundingClientRect();
         const x = e.clientX - rect.left;
@@ -43,30 +62,75 @@ export default function Hero() {
         e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
     };
 
+    // Effect Looping Ganti Teks (3 detik sekali)
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setRoleIndex((prev) => (prev + 1) % roles.length);
+        }, 3000);
+        return () => clearInterval(interval);
+    }, []);
+
+    const triggerDiagnostics = () => {
+        if (stage !== 'idle') return;
+        setStage('error');
+        setPopups([]);
+
+        let count = 0;
+        const maxPopups = 16;
+
+        // Effect Popup Error
+        const interval = setInterval(() => {
+            if (count >= maxPopups) {
+                clearInterval(interval);
+                setTimeout(() => {
+
+                    setStage('confirmed');
+                    setPopups([]);
+
+                    // Tampilan Confirmed
+                    setTimeout(() => {
+                        setStage('active');
+                    }, 1500);
+                }, 800);
+                return;
+            }
+
+            const x = 25 + Math.random() * 50;
+            const y = 25 + Math.random() * 50;
+            const rotation = (Math.random() - 0.5) * 24;
+            const scale = 0.85 + Math.random() * 0.25;
+
+            setPopups((prev) => [...prev, { id: count, x, y, rotation, scale }]);
+            count++;
+        }, 100);
+    };
+
 
     // Effect Animasi Mengetik dan Menghapus (loop)
     useEffect(() => {
+        if (stage !== 'active') return;
+
         let timer: NodeJS.Timeout;
 
         if (!isDeleting && index < fullText.length) {
             timer = setTimeout(() => {
                 setDisplayedText((prev) => prev + fullText[index]);
                 setIndex((prev) => prev + 1);
-            }, 35); // kecepatan Mengetik
+            }, 30); // kecepatan Mengetik
         } else if (!isDeleting && index === fullText.length) {
             timer = setTimeout(() => {
                 setIsDeleting(true);
-            }, 5000) // jeda diam selama 5 detik sebelum terhapus
+            }, 8000) // jeda diam selama 5 detik sebelum terhapus
         } else if (isDeleting && index > 0) {
             timer = setTimeout(() => {
                 setDisplayedText((prev) => prev.slice(0, -1));
                 setIndex((prev) => prev - 1);
-            }, 15); // Kecepatan Menghapus
+            }, 12); // Kecepatan Menghapus
         } else if (isDeleting && index === 0) {
             setIsDeleting(false);
         }
         return () => clearTimeout(timer);
-    }, [index, isDeleting, fullText]);
+    }, [index, isDeleting, fullText, stage]);
 
     return (
         <section id="hero" className="w-full max-w-[95%] xl:max-w-[1400px] mx-auto pt-28 pb-12 px-4 scroll-mt-28">
@@ -107,16 +171,55 @@ export default function Hero() {
                         Halo! Saya <span className="font-bold text-white">Havizhan</span>
                     </p>
 
-                    <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-none">
-                        Desainer Grafis.
-                    </h1>
+                    {/* Kemampuan Saya */}
+                    <div className="h-[4rem] md:h-[5.5rem] lg:h-[6.5rem] relative overflow-hidden w-full select-none">
+                        <AnimatePresence mode="wait">
+                            <motion.h1
+                                key={roleIndex}
+                                initial={{ y: 24, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                exit={{ y: -24, opacity: 0 }}
+                                transition={{ duration: 0.35, ease: "easeOut" }}
+                                className="absolute left-0 text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-none text-white"
+                            >
+                                {roles[roleIndex]}.
+                            </motion.h1>
+                        </AnimatePresence>
+                    </div>
 
-                    {/* Deskripsi Teks dengan Animasi */}
-                    <div className="min-h-[4.5rem] md:min-h-[3.5rem] flex items-start">
-                        <p className="text-gray-400 text-sm md:text-base leading-relaxed max-w-xl">
-                            {displayedText}
-                            <span className="inline-block w-2 h-4 ml-1 bg-white animate-pulse"></span>
-                        </p>
+                    {/* Deskripsi Teks & Tombol Interaktif */}
+                    <div>
+                        {stage === 'idle' && (
+                            <button
+                                onClick={triggerDiagnostics}
+                                className="bg-white/5 border border-white/10 hover:border-white/30 text-white font-mono text-xs md:text-sm px-5 py-3 rounded-xl flex items-center gap-3 transition-all hover:bg-white/10 active:scale-95 group cursor-pointer shadow-lg"
+                            >
+                                <span className="relative flex h-2.5 w-2.5">
+                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
+                                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-yellow-500"></span>
+                                </span>
+                                <span>Decrypt Developer Profile</span>
+                            </button>
+                        )}
+
+                        {stage === 'error' && (
+                            <p className="text-yellow-400 font-mono text-xs sm:text-sm tracking-wide animate-pulse">
+                                System Scanning: Spawning Diagnostics Subprocesses...
+                            </p>
+                        )}
+
+                        {stage === 'confirmed' && (
+                            <p className="text-green-400 font-mono text-xs sm:text-sm tracking-wide">
+                                Decryption Successful. Accessing Profile Info...
+                            </p>
+                        )}
+
+                        {stage === 'active' && (
+                            <p className="text-gray-400 text-sm md:text-base leading-relaxed max-w-xl">
+                                {displayedText}
+                                <span className="inline-block w-2 h-4 ml-1 bg-white animate-pulse"></span>
+                            </p>
+                        )}
                     </div>
 
                     {/* CTA Button */}
@@ -129,7 +232,37 @@ export default function Hero() {
                     </div>
                 </div>
 
+                <AnimatePresence>
+                    {stage === 'error' && popups.map((popup) => (
+                        <motion.div
+                            key={popup.id}
+                            initial={{ opacity: 0, scale: 0.4 }}
+                            animate={{ opacity: 1, scale: popup.scale }}
+                            exit={{ opacity: 0, scale: 0.2 }}
+                            transition={{ type: "spring", stiffness: 350, damping: 18 }}
+                        >
+                            <div>
+                                <div>
+                                    X
+                                </div>
+                                <div />
+                            </div>
+
+                            {/* Window Content */}
+                            <div>
+                                <svg>
+                                    <path />
+                                    <rect />
+                                </svg>
+                                <span>
+                                    Error!
+                                </span>
+                            </div>
+                        </motion.div>
+                    ))}
+                </AnimatePresence>
+
             </div>
-        </section>
+        </section >
     );
 }
