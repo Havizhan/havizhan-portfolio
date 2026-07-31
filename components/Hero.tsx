@@ -240,21 +240,30 @@ export default function Hero() {
                             animate={{ opacity: 1, scale: popup.scale }}
                             exit={{ opacity: 0, scale: 0.2 }}
                             transition={{ type: "spring", stiffness: 350, damping: 18 }}
+                            style={{
+                                left: `${popup.x}%`,
+                                top: `${popup.y}%`,
+                                transform: "translate(-50%, -50%)",
+                                rotate: `${popup.rotation}deg`,
+                            }}
+                            className="absolute bg-white border-[3px] border-black shadow-[5px_5px_0px_rgba(0,0,0,1)] w-[160px] sm:w-[220px] rounded-md overflow-hidden z-40 pointer-events-none "
                         >
-                            <div>
-                                <div>
-                                    X
+                            {/* Window Header */}
+                            <div className="bg-[#ffe600] border-b-[3px] border-black px-2 py-1 flex items-center justify-between">
+                                <div className="w-4 h-4 border-2 border-black bg-white flex items-center justify text-[10px] font-bold text-black select-none">
+                                    ✕
                                 </div>
-                                <div />
+                                <div className="h-1.5 w-12 bg-black/10 rounded-full" />
                             </div>
 
                             {/* Window Content */}
-                            <div>
-                                <svg>
-                                    <path />
-                                    <rect />
+                            <div className="p-3 sm:p-4 flex items-center justify-center gap-3">
+                                <svg className="w-8 h-8 sm:w-10 sm:h-10 shrink-0" viewBox="0 0 24 24" fill="none" xmlns="http:www.w3.org/2000/svg">
+                                    <path d="M12 2L2 22H22L12 2Z" fill="#FFE600" stroke="black" strokeWidth="2.5" strokeLinejoin="round" />
+                                    <rect x="11" y="9" width="2" height="6" fill="black" rx="1" />
+                                    <circle cx="12" cy="18" r="1.2" fill="black" />
                                 </svg>
-                                <span>
+                                <span className="text-black font-mono font-bold text-xs sm:text-sm tracking-wider uppercase">
                                     Error!
                                 </span>
                             </div>
