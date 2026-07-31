@@ -271,6 +271,40 @@ export default function Hero() {
                     ))}
                 </AnimatePresence>
 
+
+                <AnimatePresence>
+                    {stage === 'confirmed' && (
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.7 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.8 }}
+                            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white border-[3px] border-black shadow-[8px_8px_0px_rgba(0,0,0,1)] w-[240px] sm:w-[280px] rounded-md overflow-hidden z-50 pointer-events-none"
+                        >
+                            <div className="bg-[#22c55e] border-b-[3px] border-black px-2 py-1 flex items-center justify-between">
+                                <span className="text-black font-mono font-bold text-[10px] uppercase tracking-wider">
+                                    System Status
+                                </span>
+                                <div className="w-4 h-4 border-2 border-black bg-white flex items-center justify center text-[10px] font-bold text-black select-none">
+                                    ✓
+                                </div>
+                            </div>
+                            <div className="p-5 flex flex-col items-center justify-center gap-3 text-center">
+                                <div className="w-10 h-10 rounded-full bg-[#e8f5e9] border-2 border-black flex items-center justify-center text-[#22c55e] shadow-[3px_3px_0px_rgba(0,0,0,1)] font-mono font-extrabold text-xl">
+                                    ✓
+                                </div>
+                                <div>
+                                    <h3 className="text-black font-mono font-bold text-xs sm:text-sm uppercase tracking-wide">
+                                        Confirmed!
+                                    </h3>
+                                    <p className="text-gray-500 font-mono text-[9px] mt-1">
+                                        Profile Decrypted Successfully.
+                                    </p>
+                                </div>
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </div>
         </section >
     );

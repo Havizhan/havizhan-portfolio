@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { motion, useMotionValue, useTransform } from "framer-motion";
+import { useEffect, useState } from "react";
+import { motion, useMotionValue, useTransform, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
 export default function LanyardCard() {
@@ -47,6 +47,17 @@ export default function LanyardCard() {
         const relX = (e.clientX - rect.left) / rect.width - 0.5;
         setClickOffset({ x: relX, y: relY });
     };
+
+    // Looping Bagian Bawah Lanyard
+    const roles = ["Student at UNS", "Desainer Grafis", "Frontend Dev"];
+    const [roleIndex, setRoleIndex] = useState(0);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setRoleIndex((prev) => (prev + 1) % roles.length);
+        }, 3000);
+        return () => clearInterval(interval);
+    }, []);
 
     return (
         <div className="relative w-full h-[260px] sm:h-[320px] md:h-[380px] lg:h-[420px] flex flex-col items-center select-none pt-0 overflow-visible">
@@ -117,11 +128,22 @@ export default function LanyardCard() {
                 </div>
 
                 {/* Label bawah */}
-                <div className="w-full pt-2 sm:pt-3 pb-1 px-1 flex justify-between items-end">
-                    <p className="font-serif italic text-sm sm:text-base md:text-lg text-black font-extrabold tracking-tight opacity-90">
-                        Student at UNS
-                    </p>
-                    <div className="text-[6px] sm:text-[8px] font-mono text-gray-700 uppercase tracking-widest font-bold">
+                <div className="w-full pt-2 sm:pt-3 pb-1 px-1 flex justify-between items-end relative min-h-[30px] sm:min-h-[35px]">
+                    <div className="relative flex-grow h-6 sm:h-7 overflow-hidden">
+                        <AnimatePresence mode="wait">
+                            <motion.p
+                                key={roleIndex}
+                                initial={{ y: 0, opacity: 0 }}
+                                animate={{ y: 0, opacity: 0.9 }}
+                                exit={{ y: -8, opacity: 0 }}
+                                transition={{ duration: 0.25 }}
+                                className="font-serif italic text-[11px] sm:text-sm md:text-base text-black font-extrabold tracking-tight opacity-90 absolute left-0 bottom-0 select-none whitespace-nowrap"
+                            >
+                                {roles[roleIndex]}
+                            </motion.p>
+                        </AnimatePresence>
+                    </div>
+                    <div className="text-[6px] sm:text-[8px] font-mono text-gray-700 uppercase tracking-widest font-bold select-none shrink-0 mb-0.5">
                         VERIFIED ID
                     </div>
                 </div>
