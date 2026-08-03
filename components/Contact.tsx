@@ -65,91 +65,104 @@ export default function Contact() {
                                 <span>
                                     Download PPT Portofolio
                                 </span>
-                                <svg>
-                                    <path />
+                                <svg className="w-4 h-4 transition-transform group-hover:translate-y-0.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
                                 </svg>
                             </a>
                         </div>
                     </div>
 
                     {/* Kartu Kanan: Email & Lokasi */}
-                    <div>
-                        <div>
-                            <Mail />
-                        </div>
-                        <div>
-                            <p>
-                                EMAIL
-                            </p>
-                            <a href="">havizhanrhaiya@gmail.com</a>
-                        </div>
-                    </div>
+                    <div className="md:col-span-5 flex flex-col gap-6">
 
-                    {/* Lokasi Card */}
-                    <div>
-                        <div>
-                            <MapPin />
+                        {/* Mail Card */}
+                        <div className="bg-white text-black border-[3px] border-black rounded-[24px] p-5 flex items-center gap-4 shadow-[5px_5px_0px_rgba(0,0,0,1)]">
+                            <div className="w-10 h-10 shrink-0 bg-[#ffe600] border-2 border-black rounded-xl flex items-center justify-center text-black shadow-[2px_2px_0px_rgba(0,0,0,1)]">
+                                <Mail className="w-5 h-5" strokeWidth={2.5} />
+                            </div>
+                            <div className="overflow-hidden">
+                                <p className="text-gray-500 font-mono text-[9px] uppercase font-bold tracking-wider">
+                                    EMAIL
+                                </p>
+                                <a href="mailto:havizhanrhaiya@gmail.com" className="font-bold text-sm sm:text-base hover:underline block truncate select-all">havizhanrhaiya@gmail.com</a>
+                            </div>
                         </div>
-                        <div>
-                            <p>
-                                LOKASI
-                            </p>
-                            <p>
-                                Surakarta, Indonesia
-                            </p>
+
+                        {/* Lokasi Card */}
+                        <div className="bg-white text-black border-[3px] border-black rounded-[24px] p-5 flex items-center gap-4 shadow-[5px_5px_0px_rgba(0,0,0,1)]">
+                            <div className="w-10 h-10 shrink-0 bg-[#ffe600] border-2 border-black rounded-xl flex items-center justify-center text-black shadow-[2px_2px_0px_rgba(0,0,0,1)]">
+                                <MapPin className="w-5 h-5" strokeWidth={2.5} />
+                            </div>
+                            <div className="overflow-hidden">
+                                <p className="text-gray-500 font-mono text-[9px] uppercase font-bold tracking-wider">
+                                    LOKASI
+                                </p>
+                                <a href="mailto:havizhanrhaiya@gmail.com" className="font-bold text-sm sm:text-base hover:underline block truncate select-all">Surakarta, Indonesia</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            {/* Bagian Bawah */}
-            <div>
-                <p>
-                    TERHUBUNG DENGAN SAYA
-                </p>
-                <div>
+                {/* Bagian Bawah */}
+                <div className="w-full max-w-4xl mx-auto mt-12 flex flex-col items-stretch">
+                    <p className="text-gray-500 font-mono font-bold text-xs uppercase tracking-widest mb-4">
+                        TERHUBUNG DENGAN SAYA
+                    </p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
-                    {/* GITHUB CARD */}
-                    <a href="">
-                        <div>
-                            <div>
-                                {/* <GithubIcon /> */}
+                        {/* GITHUB CARD */}
+                        <a
+                            href="https://github.com/Havizhan"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="bg-white text-black border-[3px] border-black rounded-[24px] p-5 flex items-center justify-between shadow-[5px_5px_0px_rgba(0,0,0,1)] hover:bg-gray-50 transition-all group"
+                        >
+                            <div className="flex items-center gap-4">
+                                <div className="w-10 h-10 shrink-0 bg-black text-white border-2 border-black rounded-xl flex items-center justify-center">
+                                    <GithubIcon className="w-5 h-5" />
+                                </div>
+                                <div>
+                                    <p className="font-bold text-sm sm:text-base">
+                                        Github
+                                    </p>
+                                    <p className="text-gray-500 text-xs font-mono">
+                                        @havizhanrhaiya
+                                    </p>
+                                </div>
                             </div>
-                            <div>
-                                <p>
-                                    Github
-                                </p>
-                                <p>
-                                    @havizhanrhaiya
-                                </p>
-                            </div>
-                        </div>
-                        <ArrowUpRight />
-                    </a>
+                            <ArrowUpRight className="w-5 h-5 text-black shrink-0 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" strokeWidth={2.5} />
+                        </a>
 
-                    {/* LINKEDIN CARD */}
-                    <a href="">
-                        <div>
-                            <div>
-                                {/* <LinkedinIcon /> */}
+                        {/* LINKEDIN CARD */}
+                        <a
+                            href="linkedin.com/in/havizhan-rhaiya-ardhana-931179296"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="bg-white text-black border-[3px] border-black rounded-[24px] p-5 flex items-center justify-between shadow-[5px_5px_0px_rgba(0,0,0,1)] hover:bg-gray-50 transition-all group"
+                        >
+                            <div className="flex items-center gap-4">
+                                <div className="w-10 h-10 shrink-0 bg-black text-white border-2 border-black rounded-xl flex items-center justify-center">
+                                    <LinkedinIcon className="w-5 h-5" />
+                                </div>
+                                <div>
+                                    <p className="font-bold text-sm sm:text-base">
+                                        LinkedIn
+                                    </p>
+                                    <p className="text-gray-500 text-xs font-mono">
+                                        @Havizhan Rhaiya Ardhana
+                                    </p>
+                                </div>
                             </div>
-                            <div>
-                                <p>
-                                    LinkedIn
-                                </p>
-                                <p>
-                                    @Havizhan Rhaiya Ardhana
-                                </p>
-                            </div>
-                        </div>
-                        <ArrowUpRight />
-                    </a>
+                            <ArrowUpRight className="w-5 h-5 text-black shrink-0 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" strokeWidth={2.5} />
+                        </a>
+                    </div>
                 </div>
-            </div>
 
-            {/* Footer */}
-            <div>
-                <p>
+                {/* Footer */}
+                <div className="w-full max-w-4xl mx-auto h-[1px] bg-white/10 my-16" />
+
+                {/* Copyright */}
+                <p className="text-center text-gray-500 text-xs font-mono tracking-widest select-none">
                     © 2026 Havizhan Rhaiya Ardhana. All rights reserved.
                 </p>
             </div>
